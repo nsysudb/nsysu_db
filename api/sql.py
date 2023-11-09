@@ -83,9 +83,10 @@ class Product():
         sql ='SELECT * FROM PRODUCT WHERE PID = :id'
         return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': pid}))
 
-    def get_all_product():
-        sql = 'SELECT * FROM PRODUCT'
-        return DB.fetchall(DB.execute( DB.connect(), sql))
+    def get_all_product(user_id):
+        sql = 'SELECT * FROM PRODUCT WHERE MID =:id'
+        return DB.fetchall(DB.execute_input( DB.prepare(sql), {'id':user_id}))
+        
     
     def get_name(pid):
         sql = 'SELECT PNAME FROM PRODUCT WHERE PID = :id'

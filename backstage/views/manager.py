@@ -48,11 +48,14 @@ def productManager():
     user_id = session.get('user_id')
     print("user_id"+ user_id+ "確定manager啟動!")
     
-    book_data = book()
+    book_data = book() #用來找餐點有哪些(要加上user_id判斷)
     return render_template('productManager.html', book_data = book_data, user=current_user.name, user_id = user_id)
 
-def book():
-    book_row = Product.get_all_product()
+def book(): 
+    user_id = session.get('user_id')
+    book_row = Product.get_all_product(user_id)
+
+    print("userid"+ user_id+ "在manager.py的book有抓到喔")
     book_data = []
     for i in book_row:
         book = {
