@@ -11,6 +11,17 @@ body {
         white 100%
     );
 }
+.index_homepage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.index_homepage img {
+    min-height: 100%;
+    width: 100%;
+}
 .index_pic{
     height: 250px;
     margin:auto;
@@ -23,6 +34,8 @@ body {
     font-size: 40px;
     margin-bottom:20px;
     margin-top: 20px;
+    font-weight:bold;
+
 }
 .book_title{
     text-align: center;
