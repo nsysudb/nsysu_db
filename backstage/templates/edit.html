@@ -30,18 +30,29 @@
         <th>類別</th>
         <td>
           <select class="form-control" name="category">
-            {% if data.類別 == 'CD' %}
-              <option value="BOOK">BOOK</option>
-              <option value="DVD">DVD</option>
-              <option value="CD" selected>CD</option>
-            {% elif data.類別 == 'DVD' %}
-              <option value="BOOK">BOOK</option>
-              <option value="DVD" selected>DVD</option>
-              <option value="CD">CD</option>
+            {% if data.類別 == 'Fast food' %}
+              <option value="Fast food" selected>Fast food</option>
+              <option value="Rice">Rice</option>
+              <option value="Noodle">Noodle</option>
+              <option value="Drink">Drink</option>
+              
+            {% elif data.類別 == 'Rice' %}
+              <option value="Fast food" >Fast food</option>
+              <option value="Rice" selected>Rice</option>
+              <option value="Noodle">Noodle</option>
+              <option value="Drink">Drink</option>
+
+            {% elif data.類別 == 'Noodle' %}
+              <option value="Fast food" >Fast food</option>
+              <option value="Rice" >Rice</option>
+              <option value="Noodle" selected >Noodle</option>
+              <option value="Drink">Drink</option>
+
             {% else %}
-              <option value="BOOK" selected>BOOK</option>
-              <option value="DVD">DVD</option>
-              <option value="CD">CD</option>
+              <option value="Fast food" >Fast food</option>
+              <option value="Rice" >Rice</option>
+              <option value="Noodle" >Noodle</option>
+              <option value="Drink" selected >Drink</option>
             {% endif %}
             
         </select>
