@@ -53,7 +53,7 @@ def productManager():
 
 def book(): 
     user_id = session.get('user_id')
-    book_row = Product.get_all_product(user_id)
+    book_row = Product.get_all_product_ByUID(user_id)
 
     print("userid"+ user_id+ "在manager.py的book有抓到喔")
     book_data = []
