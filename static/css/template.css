@@ -10,13 +10,19 @@ body {
         white 60%,
         white 100%
     );
+    background-image: url(../img/res_img.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+
 .index_pic{
-    height: 250px;
-    margin:auto;
+    height: 300px;
+    margin:50px;
+    
     display:block;
     margin-bottom: 20px;
-    opacity: 0.7;
 }
 .index_title{
     text-align: center;
@@ -24,6 +30,13 @@ body {
     margin-bottom:20px;
     margin-top: 20px;
 }
+
+.index_background{
+    background-color: rgba(1,1,1,0.5);
+    padding:20px;
+    border-radius: 3%;
+}
+
 .book_title{
     text-align: center;
     font-size: 34px;
@@ -37,10 +50,10 @@ body {
 }
 .index_btn{
     width: 100px;
-    height: 50px;
-    font-size: 25px;
+    height: 40px;
+    font-size: 15px;
     margin: 10px;
-    background-color: #a29074;
+    background-color: rgba(8, 119, 163, 0.463);
     color: white;
     font-weight: bolder;
     border-radius: 10px;
@@ -187,3 +200,4 @@ input{
     background-color: #ebebeb;
 	border-bottom: 2px solid #a29074;
 }
+

@@ -121,35 +121,26 @@
 
 <br/>
 
-<div class="container-xxl">
+<div class="container-xxl ">
 
 <form method='post' action={{ url_for('manager.productManager') }} >
-<table id="manager" class="table table-bordered">
-    <thead>
-        <tr>
-            <th width="10%"><center>菜品編號</center></th>
-            <th width="20%"><center>菜品名稱</center></th>
-            <th width="20%"><center>菜品圖片</center></th>
-            <th width="15%"><center>菜品單價</center></th>
-            <th width="15%"><center>菜品類別</center></th>
-            <th colspan="2"><center>資料操作</center></th>
-        </tr>
-    </thead>
-    <tbody id="product">
+
     {% for i in book_data %}
-        <tr>
-            <td><center>{{ i.商品編號 }}</center></td>
-            <td><center>{{ i.商品名稱 }}</center></td>
-            <td><center>菜品圖片放這邊呦^w^</center></td>
-            <td><center>{{ i.商品售價 }}</center></td>
-            <td><center>{{ i.商品類別 }}</center></td>
-            <td><center><button type="submit" value="{{i.商品編號}}" name="edit" class="btn btn-success">編輯菜品</button></center></td>
-            <td><center><button type="submit" value="{{i.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ i.商品名稱 }}\' 嗎？'))" class="btn btn-danger">刪除商品</button></center></td>
-        </tr>
+    <div class="card flex-row mb-3" >
+        <img class="card-img-left example-card-img-responsive" width="200px" height="200px" src="{{ i.商品圖片 }}"/>
+        <div class="card-body">
+          <h4 class="card-title h5 h4-sm">菜品名稱: {{ i.商品名稱 }}</h4>
+          <p class="card-text"><small class="text-muted">菜品編號: {{ i.商品編號 }}</small></p>
+          <p class="card-text">菜品編號: {{ i.商品類別 }}</p>
+          <p class="card-text">菜品售價: ${{ i.商品售價 }}</p>
+          <button type="submit" value="{{i.商品編號}}" name="edit" class="btn btn-success">編輯菜品</button>
+          <button type="submit" value="{{i.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ i.商品名稱 }}\' 嗎？'))" class="btn btn-danger">刪除商品</button>
+          
+        </div>
+      </div>
+
     {% endfor %}
-    </tbody>
-    
-</table>
+
 </form>
 
 
