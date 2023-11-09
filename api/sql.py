@@ -30,7 +30,7 @@ class DB():
 
 class Member():
     def get_member(account):
-        sql = "SELECT ACCOUNT, PASSWORD, MID, IDENTITY, NAME FROM MEMBER WHERE ACCOUNT = :id"
+        sql = "SELECT ACCOUNT, PASSWORD, MID, IDENTITY, NAME, MTEL, ADDRESS FROM MEMBER WHERE ACCOUNT = :id"
         return DB.fetchall(DB.execute_input(DB.prepare(sql), {'id' : account}))
     
     def get_all_account():
@@ -38,7 +38,7 @@ class Member():
         return DB.fetchall(DB.execute(DB.connect(), sql))
 
     def create_member(input):
-        sql = 'INSERT INTO MEMBER VALUES (null, :name, :account, :password, :identity)'
+        sql = 'INSERT INTO MEMBER VALUES (null, :name, :account, :password, :identity, :mtel , :address)'
         DB.execute_input(DB.prepare(sql), input)
         DB.commit()
     
