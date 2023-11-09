@@ -30,26 +30,26 @@
         <th>類別</th>
         <td>
           <select class="form-control" name="category">
-            {% if data.類別 == 'Fast food' %}
-              <option value="Fast food" selected>Fast food</option>
+            {% if data.類別 == 'Fastfood' %}
+              <option value="Fastfood" selected>Fastfood</option>
               <option value="Rice">Rice</option>
               <option value="Noodle">Noodle</option>
               <option value="Drink">Drink</option>
               
             {% elif data.類別 == 'Rice' %}
-              <option value="Fast food" >Fast food</option>
+              <option value="Fastfood" >Fastfood</option>
               <option value="Rice" selected>Rice</option>
               <option value="Noodle">Noodle</option>
               <option value="Drink">Drink</option>
 
             {% elif data.類別 == 'Noodle' %}
-              <option value="Fast food" >Fast food</option>
+              <option value="Fastfood" >Fastfood</option>
               <option value="Rice" >Rice</option>
               <option value="Noodle" selected >Noodle</option>
               <option value="Drink">Drink</option>
 
             {% else %}
-              <option value="Fast food" >Fast food</option>
+              <option value="Fastfood" >Fastfood</option>
               <option value="Rice" >Rice</option>
               <option value="Noodle" >Noodle</option>
               <option value="Drink" selected >Drink</option>
