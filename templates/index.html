@@ -6,19 +6,16 @@
 {% block title %}美食外送{% endblock title%}
 
 {% block content%}
-<div class="index_homepage">
-    <img src="../static/img/homepage.jpg">
-</div>
-<div class="position-absolute top-50 start-50 translate-middle">
-    <img class="index_pic" src="../static/img/monkey.jpg">
-    <h1 class="index_title">美食外送</h1>
-    <div class="btn_div">
-        <a href="{{ url_for('api.register') }}">
-            <button class="index_btn">註冊</button>
-        </a>
-        <a href="{{ url_for('api.login') }}">
-            <button class="index_btn">登入</button>
-        </a>
+    <div class="position-absolute top-50 start-50 translate-middle index_background" >
+        <img class="index_pic" src="../static/img/monkey.png">
+        <h1 class="index_title" style="color: rgb(202, 193, 193); font-weight: bolder">猴子外送台</h1>
+        <div class="btn_div">
+            <a href="{{ url_for('api.register') }}">
+                <button class="index_btn">註冊</button>
+            </a>
+            <a href="{{ url_for('api.login') }}">
+                <button class="index_btn">登入</button>
+            </a>
+        </div>
     </div>
-</div>
 {% endblock content%}

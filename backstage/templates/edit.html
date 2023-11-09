@@ -15,11 +15,11 @@
   <form method="post" enctype=multipart/form-data action={{ url_for('manager.edit') }}>
     <table class="table table-bordered">
       <tr>
-        <th>商品編號</th>
+        <th>菜品編號</th>
         <td><input class="form-control" type="text" value="{{ data.商品編號 }}" name="pid" readonly class="id_input"></td>
       </tr>
       <tr>
-        <th>商品名稱</th>
+        <th>菜品名稱</th>
         <td><input class="form-control" type="text" value="{{ data.商品名稱 }}" name="name" required></td>
       </tr>
       <tr>
@@ -30,24 +30,35 @@
         <th>類別</th>
         <td>
           <select class="form-control" name="category">
-            {% if data.類別 == 'CD' %}
-              <option value="BOOK">BOOK</option>
-              <option value="DVD">DVD</option>
-              <option value="CD" selected>CD</option>
-            {% elif data.類別 == 'DVD' %}
-              <option value="BOOK">BOOK</option>
-              <option value="DVD" selected>DVD</option>
-              <option value="CD">CD</option>
+            {% if data.類別 == 'Fastfood' %}
+              <option value="Fastfood" selected>Fastfood</option>
+              <option value="Rice">Rice</option>
+              <option value="Noodle">Noodle</option>
+              <option value="Drink">Drink</option>
+              
+            {% elif data.類別 == 'Rice' %}
+              <option value="Fastfood" >Fastfood</option>
+              <option value="Rice" selected>Rice</option>
+              <option value="Noodle">Noodle</option>
+              <option value="Drink">Drink</option>
+
+            {% elif data.類別 == 'Noodle' %}
+              <option value="Fastfood" >Fastfood</option>
+              <option value="Rice" >Rice</option>
+              <option value="Noodle" selected >Noodle</option>
+              <option value="Drink">Drink</option>
+
             {% else %}
-              <option value="BOOK" selected>BOOK</option>
-              <option value="DVD">DVD</option>
-              <option value="CD">CD</option>
+              <option value="Fastfood" >Fastfood</option>
+              <option value="Rice" >Rice</option>
+              <option value="Noodle" >Noodle</option>
+              <option value="Drink" selected >Drink</option>
             {% endif %}
             
         </select>
       </tr>
       <tr>
-        <th>商品敘述</th>
+        <th>菜品敘述</th>
         <td>
           <textarea class="form-control" name="description">{{ data.商品敘述 }}</textarea>
         </td>

@@ -55,8 +55,10 @@ def book():
             '商品編號': i[0],
             '商品名稱': i[1],
             '商品售價': i[2],
-            '商品類別': i[3]
+            '商品類別': i[3],
+            '商品圖片': i[5]
         }
+        
         book_data.append(book)
     return book_data
 
@@ -156,6 +158,7 @@ def orderManager():
                 '訂單時間': i[3]
             }
             order_data.append(order)
+            
             
         orderdetail_row = Order_List.get_orderdetail()
         order_detail = []
