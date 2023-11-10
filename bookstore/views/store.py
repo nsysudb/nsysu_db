@@ -21,11 +21,13 @@ def bookstore():
     result = Product.count()
     count = math.ceil(result[0]/9)
     flag = 0
-    
+    # 
     if request.method == 'GET':
         if(current_user.role == 'manager'):
             flash('No permission')
             return redirect(url_for('manager.home'))
+        if current_user.role == 'user':    #如果是用戶則進入/restaurant路徑
+            return redirect(url_for('bookstore.restaurant'))
 
     if 'keyword' in request.args and 'page' in request.args:
         total = 0
@@ -151,6 +153,13 @@ def bookstore():
                 book_data.append(book)
         
         return render_template('bookstore.html', book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)
+
+# 添加一个名为 restaurant 的视图函数
+@store.route('/restaurant')
+@login_required
+def restaurant():
+    # 这里可以根据需要返回 restaurant 页面的内容
+    return render_template('restaurant.html')
 
 # 會員購物車
 @store.route('/cart', methods=['GET', 'POST'])

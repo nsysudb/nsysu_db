@@ -1,0 +1,27 @@
+{% extends "frontstage.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}餐廳列表{% endblock title%}
+
+{% block content%}
+<br/>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+
+  
+{% endif %}
+{% endwith %}
+<div>      
+    <ul>
+      <li><a href="link_to_mcdonalds">麥當勞</a></li>
+      <li><a href="link_to_ashu_snacks">阿雪小吃店</a></li>
+      <li><a href="link_to_kebuke_tea">可不可熟成紅茶</a></li>
+      <li><a href="link_to_morning_kitchen">晨間廚房</a></li>
+      <li><a href="link_to_good_morning_city">早安美芝城</a></li>
+      <li><a href="link_to_fifty">五十嵐</a></li>
+    </ul>
+  </div>
+{% endblock content%}
