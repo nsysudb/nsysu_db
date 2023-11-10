@@ -13,19 +13,136 @@ import math
 from base64 import b64encode
 from api.sql import Member, Order_List, Product, Record, Cart
 
-store = Blueprint('bookstore', __name__, template_folder='../templates')
+store = Blueprint('restaurant', __name__, template_folder='../templates')
 
 @store.route('/', methods=['GET', 'POST'])
+@login_required
+def restaurant():
+    result = Member.countMember()
+    count = math.ceil(result[0]/9)
+    flag = 0
+    # 
+    if request.method == 'GET':
+        if(current_user.role == 'manager'):
+            flash('No permission')
+            return redirect(url_for('manager.home'))
+       
+
+    if 'keyword' in request.args and 'page' in request.args:
+        total = 0
+        single = 1
+        page = int(request.args['page'])
+        start = (page - 1) * 9
+        end = page * 9
+        search = request.values.get('keyword')
+        keyword = search
+        
+        cursor.prepare('SELECT * FROM MEMBER WHERE NAME LIKE :search')
+        cursor.execute(None, {'search': '%' + keyword + '%'})
+        book_row = cursor.fetchall()
+        book_data = []
+        final_data = []
+        
+        for i in book_row:
+            book = {
+                '餐廳編號': i[0],
+                '餐廳名稱': i[1]
+            }
+            book_data.append(book)
+            total = total + 1
+        
+        if(len(book_data) < end):
+            end = len(book_data)
+            flag = 1
+            
+        for j in range(start, end):
+            final_data.append(book_data[j])
+            
+        count = math.ceil(total/9)
+        
+        return render_template('restaurant.html', single=single, keyword=search, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
+
+    
+ 
+    
+    elif 'page' in request.args:
+        page = int(request.args['page'])
+        start = (page - 1) * 9
+        end = page * 9
+        
+        book_row = Member.get_all_manager()
+        book_data = []
+        final_data = []
+        
+        for i in book_row:
+            book = {
+                '餐廳編號': i[0],
+                '餐廳名稱': i[1]
+            }
+            book_data.append(book)
+            
+        if(len(book_data) < end):
+            end = len(book_data)
+            flag = 1
+            
+        for j in range(start, end):
+            final_data.append(book_data[j])
+        
+        return render_template('restaurant.html', book_data=final_data, user=current_user.name, page=page, flag=flag, count=count)    
+    
+    elif 'keyword' in request.args:
+        single = 1
+        search = request.values.get('keyword')
+        keyword = search
+        cursor.prepare('SELECT * FROM MEMBER WHERE NAME LIKE :search')
+        cursor.execute(None, {'search': '%' + keyword + '%'})
+        book_row = cursor.fetchall()
+        book_data = []
+        total = 0
+        
+        for i in book_row:
+            book = {
+                '餐廳編號': i[0],
+                '餐廳名稱': i[1]
+            }
+
+            book_data.append(book)
+            total = total + 1
+            
+        if(len(book_data) < 9):
+            flag = 1
+        
+        count = math.ceil(total/9)    
+        
+        return render_template('restaurant.html', keyword=search, single=single, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
+    
+    else:
+        book_row = Member.get_all_manager()
+        book_data = []
+        temp = 0
+        for i in book_row:
+            book = {
+                '餐廳編號': i[0],
+                '餐廳名稱': i[1]
+            }
+            if len(book_data) < 9:
+                book_data.append(book)
+        
+        return render_template('restaurant.html', book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)
+
+
+@store.route('/bookstore',methods=['GET', 'POST'])
 @login_required
 def bookstore():
     result = Product.count()
     count = math.ceil(result[0]/9)
     flag = 0
-    
+    # 
     if request.method == 'GET':
         if(current_user.role == 'manager'):
             flash('No permission')
             return redirect(url_for('manager.home'))
+    
 
     if 'keyword' in request.args and 'page' in request.args:
         total = 0
@@ -63,26 +180,29 @@ def bookstore():
         return render_template('bookstore.html', single=single, keyword=search, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
 
     
-    elif 'pid' in request.args:
-        pid = request.args['pid']
-        data = Product.get_product(pid)
+    elif 'mid' in request.args:
+        mid = request.args['mid']
+        data = Product.get_all_product_ByUID(mid)
+        if data is not None and len(data) >= 5:
+            pname = data[1]
+            price = data[2]
+            category = data[3]
+            description = data[4]
+            image = 'sdg.jpg'
+            
+            product = {
+                '商品編號': mid,
+                '商品名稱': pname,
+                '單價': price,
+                '類別': category,
+                '商品敘述': description,
+                '商品圖片': image
+            }
+        else:
+            flash('Product not found')
         
-        pname = data[1]
-        price = data[2]
-        category = data[3]
-        description = data[4]
-        image = 'sdg.jpg'
-        
-        product = {
-            '商品編號': pid,
-            '商品名稱': pname,
-            '單價': price,
-            '類別': category,
-            '商品敘述': description,
-            '商品圖片': image
-        }
-
-        return render_template('product.html', data = product, user=current_user.name)
+    
+        return redirect(url_for('restaurant.bookstore'))
     
     elif 'page' in request.args:
         page = int(request.args['page'])
@@ -199,23 +319,29 @@ def cart():
         
         elif "user_edit" in request.form:
             change_order()  
-            return redirect(url_for('bookstore.bookstore'))
+            return redirect(url_for('restaurant.bookstore'))
         
         elif "buy" in request.form:
             change_order()
-            return redirect(url_for('bookstore.order'))
+            return redirect(url_for('restaurant.order'))
 
         elif "order" in request.form:
-            tno = Cart.get_cart(current_user.id)[2]
-            total = Record.get_total_money(tno)
-            Cart.clear_cart(current_user.id)
+            cart_data = Cart.get_cart(current_user.id)
 
-            time = str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))
-            format = 'yyyy/mm/dd hh24:mi:ss'
-            Order_List.add_order( {'mid': current_user.id, 'time':time, 'total':total, 'format':format, 'tno':tno} )
+            if cart_data is not None:
+                tno = cart_data[2]
+                total = Record.get_total_money(tno)
+                Cart.clear_cart(current_user.id)
 
-            return render_template('complete.html', user=current_user.name)
+                time = str(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))
+                format = 'yyyy/mm/dd hh24:mi:ss'
+                Order_List.add_order({'mid': current_user.id, 'time': time, 'total': total, 'format': format, 'tno': tno})
 
+                return render_template('complete.html', user=current_user.name)
+            else:
+                flash('No items in the cart')
+                return redirect(url_for('restaurant.cart'))
+            
     product_data = only_cart()
     
     if product_data == 0:

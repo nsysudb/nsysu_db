@@ -29,6 +29,20 @@ class DB():
         connection.commit()
 
 class Member():
+    def countMember():
+        sql = 'SELECT COUNT(*) FROM Member'
+        return DB.fetchone(DB.execute( DB.connect(), sql))
+    
+    def get_all_manager():
+        sql = 'SELECT * FROM MEMBER WHERE IDENTITY = \'manager\''
+        return DB.fetchall(DB.execute( DB.connect(), sql))
+    
+    def get_member(mid):
+        sql ='SELECT * FROM MEMBER WHERE MID = :id'
+        return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': mid}))
+
+  
+    
     def get_member(account):
         sql = "SELECT ACCOUNT, PASSWORD, MID, IDENTITY, NAME, MTEL, ADDRESS FROM MEMBER WHERE ACCOUNT = :id"
         return DB.fetchall(DB.execute_input(DB.prepare(sql), {'id' : account}))
@@ -162,12 +176,13 @@ class Order_List():
         DB.commit()
 
     def get_order():
-        sql = 'SELECT OID, NAME, PRICE, ORDERTIME FROM ORDER_LIST NATURAL JOIN MEMBER ORDER BY ORDERTIME DESC'
+        sql = 'SELECT OID, NAME, PRICE, ORDERTIME, MID FROM ORDER_LIST NATURAL JOIN MEMBER ORDER BY ORDERTIME DESC'
         return DB.fetchall(DB.execute(DB.connect(), sql))
     
     def get_orderdetail():
-        sql = 'SELECT O.OID, P.PNAME, R.SALEPRICE, R.AMOUNT FROM ORDER_LIST O, RECORD R, PRODUCT P WHERE O.TNO = R.TNO AND R.PID = P.PID'
+        sql = 'SELECT O.OID, P.PNAME, R.SALEPRICE, R.AMOUNT, M.MID FROM MEMBER M, ORDER_LIST O, RECORD R, PRODUCT P WHERE O.MID=M.MID AND O.TNO = R.TNO AND R.PID = P.PID'
         return DB.fetchall(DB.execute(DB.connect(), sql))
+
 
 
 class Analysis():

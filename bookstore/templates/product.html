@@ -22,13 +22,13 @@
     <li class="list-group-item"><b>商品單價</b>&nbsp;&nbsp;{{ data.單價 }}</li>
   </ul>
   <div class="card-body">
-    <a href="{{ url_for('bookstore.bookstore') }}" class="btn btn-outline-primary">回商品列表</a>
+    <a href="{{ url_for('restaurant.bookstore') }}" class="btn btn-outline-primary">回商品列表</a>
   </div>
 </div>
 
 
 <div class="col-sm-6">
-  <form method="post" action={{ url_for('bookstore.cart') }}>
+  <form method="post" action={{ url_for('restaurant.cart') }}>
 <div class="card" style="margin-top:10%">
   <h5 class="card-header">商品介紹</h5>
   <div class="card-body">

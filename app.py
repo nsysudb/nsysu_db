@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.secret_key = 'Your Key' 
 
 app.register_blueprint(api, url_prefix='/')
-app.register_blueprint(store, url_prefix='/bookstore')
+app.register_blueprint(store, url_prefix='/restaurant')
 app.register_blueprint(analysis, url_prefix='/backstage')
 app.register_blueprint(manager, url_prefix='/backstage')
 
