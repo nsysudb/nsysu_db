@@ -185,10 +185,10 @@ def cart():
                 
             tno = data[2] # 取得交易編號
             pid = request.values.get('pid') # 使用者想要購買的東西
-            # 檢查購物車裡面有沒有商品
-            product = Record.check_product(pid, tno)
-            # 取得商品價錢
-            price = Product.get_product(pid)[2]
+            
+            product = Record.check_product(pid, tno) # 檢查購物車裡面有沒有商品
+            
+            price = Product.get_product(pid)[2] # 取得商品價錢
 
             # 如果購物車裡面沒有的話 把他加一個進去
             if(product == None):
@@ -314,7 +314,7 @@ def only_cart():
     if(count == None):
         return 0
     
-    data = Cart.get_cart(current_user.id)
+    data = Cart.get_cart(current_user.id) #cart.html要加圖片時才能用的
     tno = data[2]
     product_row = Record.get_record(tno)
     product_data = []
@@ -324,12 +324,14 @@ def only_cart():
         pname = Product.get_name(i[1])
         price = i[3]
         amount = i[2]
+        img = Product.get_img(i[1])
         
         product = {
             '商品編號': pid,
             '商品名稱': pname,
             '商品價格': price,
-            '數量': amount
+            '數量': amount,
+            '商品圖片': img
         }
         product_data.append(product)
     
