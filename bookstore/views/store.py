@@ -154,11 +154,11 @@ def bookstore():
         
         return render_template('bookstore.html', book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)
 
-# 添加一个名为 restaurant 的视图函数
+# 添加一个名为 restaurant 的函数
 @store.route('/restaurant')
 @login_required
 def restaurant():
-    # 这里可以根据需要返回 restaurant 页面的内容
+    # 這裡可以根據需要返回 restaurant 頁面的内容
     return render_template('restaurant.html')
 
 # 會員購物車
