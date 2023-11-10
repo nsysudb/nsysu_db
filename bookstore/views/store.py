@@ -26,8 +26,8 @@ def bookstore():
         if(current_user.role == 'manager'):
             flash('No permission')
             return redirect(url_for('manager.home'))
-        if current_user.role == 'user':    #如果是用戶則進入/restaurant路徑
-            return redirect(url_for('bookstore.restaurant'))
+    #    if current_user.role == 'user':    #如果是用戶則進入/restaurant路徑
+    #       return redirect(url_for('bookstore.restaurant'))
 
     if 'keyword' in request.args and 'page' in request.args:
         total = 0
@@ -73,7 +73,7 @@ def bookstore():
         price = data[2]
         category = data[3]
         description = data[4]
-        image = 'sdg.jpg'
+        image = data[5]
         
         product = {
             '商品編號': pid,
