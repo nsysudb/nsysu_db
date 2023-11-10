@@ -1,5 +1,5 @@
 import imp
-from flask import render_template, Blueprint, redirect, request, url_for, flash
+from flask import render_template, Blueprint, redirect, request, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from link import *
 from api.sql import *
@@ -35,7 +35,7 @@ def login():
 
         try:
             DB_password = data[0][1]
-            user_id = data[0][2]
+            user_id = data[0][2] #確認是MID(可以在sql.py 的get_member()函式裡面確認)
             identity = data[0][3]
 
         except:
@@ -43,6 +43,10 @@ def login():
             return redirect(url_for('api.login'))
 
         if(DB_password == password ):
+            
+            session['user_id'] = user_id #透過session讓user_id變成全域變數
+            print('session建立成功~')
+
             user = User()
             user.id = user_id
             login_user(user)
@@ -50,7 +54,7 @@ def login():
             if( identity == 'user'):
                 return redirect(url_for('bookstore.bookstore'))
             else:
-                return redirect(url_for('manager.productManager'))
+                return redirect(url_for('manager.productManager')) 
         
         else:
             flash('*密碼錯誤，請再試一次')

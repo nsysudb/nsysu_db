@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash
+from flask import Blueprint, render_template, request, url_for, redirect, flash,session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from link import *
 from api.sql import *
@@ -25,6 +25,7 @@ def home():
 @manager.route('/productManager', methods=['GET', 'POST'])
 @login_required
 def productManager():
+    
     if request.method == 'GET':
         if(current_user.role == 'user'):
             flash('No permission')
@@ -43,12 +44,18 @@ def productManager():
     elif 'edit' in request.values:
         pid = request.values.get('edit')
         return redirect(url_for('manager.edit', pid=pid))
-    
-    book_data = book()
-    return render_template('productManager.html', book_data = book_data, user=current_user.name)
 
-def book():
-    book_row = Product.get_all_product()
+    user_id = session.get('user_id')
+    print("user_id"+ user_id+ "確定manager啟動!")
+    
+    book_data = book() #用來找餐點有哪些(要加上user_id判斷)
+    return render_template('productManager.html', book_data = book_data, user=current_user.name, user_id = user_id)
+
+def book(): 
+    user_id = session.get('user_id')
+    book_row = Product.get_all_product_ByUID(user_id)
+
+    print("userid"+ user_id+ "在manager.py的book有抓到喔")
     book_data = []
     for i in book_row:
         book = {
@@ -76,6 +83,10 @@ def add():
         price = request.values.get('price')
         category = request.values.get('category')
         description = request.values.get('description')
+        img = request.values.get('img')
+        
+        user_id = session.get('user_id')
+        print("userid"+user_id+"確定在add中取得!")
 
         if (len(name) < 1 or len(price) < 1):
             return redirect(url_for('manager.productManager'))
@@ -87,7 +98,9 @@ def add():
                 'name' : name,
                 'price' : price,
                 'category' : category,
-                'description':description
+                'description':description,
+                'img':img,
+                'user_id':user_id
                 }
             )
             return redirect(url_for('manager.productManager'))    

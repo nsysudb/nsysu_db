@@ -64,7 +64,7 @@
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
           </svg>
         </span>
-        <input class="form-control me-2" id="keyword" placeholder="搜尋商品" aria-label="Search">
+        <input  class="form-control me-2" id="keyword" placeholder="搜尋商品" aria-label="Search">
     </div>
     <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         新增商品{{addCheck}}
@@ -106,6 +106,7 @@
                         <label for="ProductImg" class="form-label">菜品圖片(新增url)</label>
                         <textarea class="form-control" id="ProductImg" name="img" required></textarea>
                     </div>
+
                     <!-- <div class="mb-3">
                         <label for="inputProductImg" class="form-label">商品圖片</label><br/>
                         <input type="file" name="file" id="file-uploader" data-target="file-uploader" required/>
@@ -132,7 +133,7 @@
         <div class="card-body">
           <h4 class="card-title h5 h4-sm">菜品名稱: {{ i.商品名稱 }}</h4>
           <p class="card-text"><small class="text-muted">菜品編號: {{ i.商品編號 }}</small></p>
-          <p class="card-text">菜品編號: {{ i.商品類別 }}</p>
+          <p class="card-text">菜品類別: {{ i.商品類別 }}</p>
           <p class="card-text">菜品售價: ${{ i.商品售價 }}</p>
           <button type="submit" value="{{i.商品編號}}" name="edit" class="btn btn-success">編輯菜品</button>
           <button type="submit" value="{{i.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ i.商品名稱 }}\' 嗎？'))" class="btn btn-danger">刪除商品</button>
@@ -152,5 +153,24 @@
       alert('有使用者有使用到這筆資料，所以不能刪除');
     }
 </script>
+
+<script>
+    document.getElementById('keyword').addEventListener('input', function() {
+        var keyword = this.value.toLowerCase(); // 获取搜索框中的关键字并转为小写
+        var cards = document.querySelectorAll('.card');
+
+        cards.forEach(function(card) {
+            var cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
+            var cardCategory = card.querySelector('.card-text:nth-child(2)').textContent.toLowerCase();
+            
+            if (cardTitle.includes(keyword) || cardCategory.includes(keyword)) {
+                card.style.display = 'block'; // 显示匹配的卡片
+            } else {
+                card.style.display = 'none'; // 隐藏不匹配的卡片
+            }
+        });
+    });
+</script>
+
 
 {% endblock content %}

@@ -86,13 +86,18 @@ class Product():
     def get_all_product():
         sql = 'SELECT * FROM PRODUCT'
         return DB.fetchall(DB.execute( DB.connect(), sql))
+
+    def get_all_product_ByUID(user_id):
+        sql = 'SELECT * FROM PRODUCT WHERE MID =:id'
+        return DB.fetchall(DB.execute_input( DB.prepare(sql), {'id':user_id}))        
+        
     
     def get_name(pid):
         sql = 'SELECT PNAME FROM PRODUCT WHERE PID = :id'
         return DB.fetchone(DB.execute_input( DB.prepare(sql), {'id':pid}))[0]
 
     def add_product(input):
-        sql = 'INSERT INTO PRODUCT VALUES (:pid, :name, :price, :category, :description)'
+        sql = 'INSERT INTO PRODUCT VALUES (:pid, :name, :price, :category, :description, :img, :user_id)'
 
         DB.execute_input(DB.prepare(sql), input)
         DB.commit()
