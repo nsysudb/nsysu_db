@@ -169,7 +169,8 @@ def bookstore():
             book = {
                 '商品編號': i[0],
                 '商品名稱': i[1],
-                '商品價格': i[2]
+                '商品價格': i[2],
+                '商品圖片': i[5]
             }
             book_data.append(book)
             total = total + 1
@@ -227,7 +228,8 @@ def bookstore():
             book = {
                 '商品編號': i[0],
                 '商品名稱': i[1],
-                '商品價格': i[2]
+                '商品價格': i[2],
+                '商品圖片': i[5]
             }
             book_data.append(book)
             
@@ -255,7 +257,8 @@ def bookstore():
             book = {
                 '商品編號': i[0],
                 '商品名稱': i[1],
-                '商品價格': i[2]
+                '商品價格': i[2],
+                '商品圖片': i[5]
             }
 
             book_data.append(book)
@@ -278,6 +281,7 @@ def bookstore():
                 '商品編號': i[0],
                 '商品名稱': i[1],
                 '商品價格': i[2],
+                '商品圖片': i[5]
             }
             if len(book_data) < 9:
                 book_data.append(book)
@@ -376,11 +380,14 @@ def order():
 
     for i in product_row:
         pname = Product.get_name(i[1])
+        img = Product.get_img(i[1])
         product = {
             '商品編號': i[1],
             '商品名稱': pname,
             '商品價格': i[3],
-            '數量': i[2]
+            '數量': i[2],
+            '商品圖片':img
+
         }
         product_data.append(product)
     

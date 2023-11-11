@@ -6,9 +6,39 @@
 {% block title %}商品列表{% endblock title%}
 
 {% block content%}
+
+<style>
+  .img_size{
+    width: 150px;
+    height: 150px;
+  }
+  .cart_btn{
+  
+    border-radius: 300px;
+    margin-left: 10px;
+
+    
+  }
+  .detail_btn{
+    border-radius: 300px;
+    margin-left: 60px;
+    
+  }
+</style>
+
 <br/>
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  
+<script language="javascript">
 
+  alert('您沒有管理員的權限喔！');
+
+</script>
+
+{% endif %}
+{% endwith %}
 
 <div class="book_table container-xxl">
 
@@ -31,13 +61,31 @@
       {% endif %}
       
         <div class="col-sm-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{book.商品名稱}}</h5>
-              <p class="card-text">${{book.商品價格}}</p>
-              
-              <a href="{{ url_for('restaurant.bookstore', pid=book.商品編號) }}" class="btn btn-outline-primary">查看商品資訊</a>
-              <button class="btn btn-outline-success" type="submit" value="{{book.商品編號}}" name="pid" >加入購物車</button>
+          <div class="card ">
+            <div class="card-body ">
+
+              <div class="row">
+                <div class="col-5">
+                  <img class="img_size" src="{{book.商品圖片}}" alt="" >
+                </div>
+
+                <div class="col-7">
+
+                  <div class="row">
+                    <h5 class="card-title">{{book.商品名稱}}</h5>
+                    <p class="card-text">${{book.商品價格}}</p>
+                  </div>
+                 <div class="d-flex">
+                    <a href="{{ url_for('restaurant.bookstore', pid=book.商品編號) }}" class="btn btn-outline-success mt-5 detail_btn">詳細資訊</a>
+                    
+                    <button class="btn btn-warning mt-5 cart_btn" type="submit" value="{{book.商品編號}}" name="pid" >
+                      <i class="fa fa-cart-arrow-down  " aria-hidden="true"></i>
+                    </button>
+                  </div>
+             
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -61,7 +109,7 @@
       </li>
       {% else %}
       <li class="page-item">
-        <a class="page-link" href="{{ url_for('restaurant.bookstore', page=page-1) }}" aria-label="Previous">
+        <a class="page-link" href="{{ url_for('bookstore.bookstore', page=page-1) }}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>

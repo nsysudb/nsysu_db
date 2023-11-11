@@ -6,12 +6,38 @@
 {% block title %}BookStore{% endblock title%}
 
 {% block content%}
+
+
+<style>
+.t_bg{
+  background-color: #dee0e3;
+}
+.c_bg{
+  background: white;
+}
+.i{
+    width: 50px;
+    height: 50px;
+}
+.price_fz{
+  font-size: 20px;
+  color: #c4453b;
+}
+.rd_btn{
+  border-radius: 300px;
+}
+</style>
+
+
 <br/>
-<div class="container-xl">
+
+<div class="container-xl ">
+  <a href="{{ url_for('restaurant.cart') }}"><button class="btn btn-warning rd_btn mt-4 mb-2" type="submit" ><i class="fa fa-chevron-left" aria-hidden="true"></i>  回購物車  <i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a>
   <form method="post" action={{ url_for('restaurant.cart') }}>
-    <table class="table table-bordered">
-      <tr>
+    <table class="table table-bordered align-middle c_bg">
+      <tr class="t_bg">
         <th><center>商品編號</center></th>
+        <th><center>商品圖片</center></th>
         <th><center>商品名稱</center></th>
         <th><center>商品價格</center></th>
         <th><center>數量</center></th>
@@ -19,6 +45,7 @@
       {% for book in data %}
       <tr>
         <td> <center>{{ book.商品編號 }}</center></td>
+        <td><center><img src= {{book.商品圖片}}  alt="" class="i"></center></td>
         <td> <center>{{ book.商品名稱 }}</center></td>
         <td> <center>{{ book.商品價格 }}</center></td>
         <td width="20%">
@@ -29,6 +56,7 @@
       </tr>
       {% endfor %}
     </table>
+    
     <div class="col align-self-end">
       
     </div>
@@ -41,16 +69,55 @@
 
         </div>
         <div class="col align-self-end">
-          <b class="ml-50">訂單總價：{{ total }} 元</b>
+          <b class="ml-50 price_fz">訂單總價：{{ total }} 元</b>
         </div>
       </div>
     </div>
 
+   
+    <!--客戶資訊表單 不用可刪-->
+    <h5 class="mt-5 ">訂購表單</h5>
+    <div class="row card d-flex">
     
+        <div class="input-group mb-3 mt-3">
+          <span class="input-group-text" id="ordername">取餐人姓名</span>
+          <input type="text" class="form-control" placeholder="ex:陳小明"  aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="orderphone">電話</span>
+          <input type="text" class="form-control" placeholder="ex:0923847563"  aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="orderadd">地址</span>
+          <input type="text" class="form-control" placeholder="ex:高雄市蓮海路70號"  aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <select class="form-select" id="payway" aria-label="Example select with button addon">
+            <option selected>選擇付款方式</option>
+            <option value="1">現金</option>
+            <option value="2">刷卡</option>
+          </select>
+        </div>
+    </div>
+
+
+
+
+
+    <!--客戶資訊表單-->
+
+
     <center> 
-      <div class="option">
-        <a href="{{ url_for('restaurant.cart') }}"><button class="btn btn-primary" type="submit" >回購物車</button></a>
-        <button class="btn btn-success" type="submit" value="order" name="order">下訂單</button>
+      <div class="option mt-4 mb-5">
+       
+        <button class="btn btn-primary rd_btn" type="submit" value="order" name="order">
+          <i class="fa fa-check" aria-hidden="true"></i>  
+          送出訂單
+        </button>
+
     </div>
     </center>
 
