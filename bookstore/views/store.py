@@ -448,7 +448,7 @@ def only_cart():
     if(count == None):
         return 0
     
-    data = Cart.get_cart(current_user.id)
+    data = Cart.get_cart(current_user.id) #cart.html要加圖片時才能用的
     tno = data[2]
     product_row = Record.get_record(tno)
     product_data = []

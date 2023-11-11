@@ -78,6 +78,7 @@ class Cart():
         sql = 'SELECT * FROM CART WHERE MID = :id'
         return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': user_id}))
 
+
     def add_cart(user_id, time):
         sql = 'INSERT INTO CART VALUES (:id, :time, cart_tno_seq.nextval)'
         DB.execute_input( DB.prepare(sql), {'id': user_id, 'time':time})
