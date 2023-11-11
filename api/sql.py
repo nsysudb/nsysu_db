@@ -110,6 +110,10 @@ class Product():
         sql = 'SELECT PNAME FROM PRODUCT WHERE PID = :id'
         return DB.fetchone(DB.execute_input( DB.prepare(sql), {'id':pid}))[0]
 
+    def get_img(pid):
+        sql = 'SELECT IMAGE FROM PRODUCT WHERE PID = :id'
+        return DB.fetchone(DB.execute_input( DB.prepare(sql), {'id':pid}))[0]
+
     def add_product(input):
         sql = 'INSERT INTO PRODUCT VALUES (:pid, :name, :price, :category, :description, :img, :user_id)'
 

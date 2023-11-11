@@ -458,12 +458,16 @@ def only_cart():
         pname = Product.get_name(i[1])
         price = i[3]
         amount = i[2]
+        img = Product.get_img(i[1])
         
         product = {
             '商品編號': pid,
             '商品名稱': pname,
             '商品價格': price,
-            '數量': amount
+            '數量': amount,
+            '商品圖片': img
+
+            
         }
         product_data.append(product)
     
