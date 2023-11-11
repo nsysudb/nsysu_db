@@ -105,7 +105,7 @@ def add():
             )
             return redirect(url_for('manager.productManager'))    
         else:
-            print("有商品了啦!") #DEBUG用
+            print("有菜品了啦!") #DEBUG用
             flash("gotProductName") #若出現則不新增，並且跳出錯誤訊息
             return redirect(url_for('manager.productManager'))
 

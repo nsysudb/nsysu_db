@@ -66,6 +66,7 @@ def login():
 @api.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
+       
         user_account = request.form['account']
         exist_account = Member.get_all_account()
         account_list = []
@@ -86,6 +87,10 @@ def register():
             return redirect(url_for('api.login'))
 
     return render_template('register.html')
+
+
+
+
 
 @api.route('/logout')
 def logout():
