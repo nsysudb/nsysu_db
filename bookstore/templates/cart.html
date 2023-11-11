@@ -18,48 +18,94 @@
 {% endwith %}
 
 <br/>
-<div class="container-xl">
+
+
+<style>
+  .i{
+    width: 50px;
+    height: 50px;
+  }
+.fa-shopping-cart{
+  font-size: 15px;
+}
+.mr-3{
+  margin-right: 10px;
+}
+.rd_btn{
+  border-radius: 300px;
+}
+.monkey_bp{
+  width: 150px;
+  height: 150px;
+}
+.title{
+  font-size: 50px;
+  font-family: 'Edu TAS Beginner', cursive;
+}
+.t_bg{
+  background-color: #dee0e3;
+}
+
+</style>
+
+
+
+<div class="container-xl  ">
+  <div class="d-flex  justify-content-center">
+    <img class="monkey_bp mr-3" src="https://png.pngtree.com/png-vector/20220819/ourmid/pngtree-premium-vector-l-image-of-a-cute-monkey-dreaming-free-downloads-png-image_6116199.png" alt="">
+    <center><div class="title mt-5 ">Shopping Cart</div></center>
+  </div>
+   
   <br/>
-  <form method="post" action={{ url_for('restaurant.cart') }}>
-    <table class="table table-bordered">
-      <tr>
-        <th><center>商品編號</center></th>
-        <th><center>商品名稱</center></th>
-        <th><center>商品價格</center></th>
-        <th><center>數量</center></th>
-        <th><center>商品操作</center></th>
-      </tr>
-      {% for book in data %}
-      <tr>
-        <td> <center>{{ book.商品編號 }}</center></td>
-        <td> <center>{{ book.商品名稱 }}</center></td>
-        <td> <center>{{ book.商品價格 }}</center></td>
-        <td width="20%">
-          <center>
-            <input class="form-control" type="number" onkeyup="value=value.replace(/[^\d]/g,'')" min="1" value="{{ book.數量 }}" name="{{ book.商品編號 }}">
+    <form method="post" action={{ url_for('restaurant.cart') }}>
+      <table class="table table-bordered align-middle card">
+        <tr class="t_bg">
+          <th><center>商品編號</center></th>
+          <th><center>商品圖片</center></th>
+          <th><center>商品名稱</center></th>
+          <th><center>商品價格</center></th>
+          <th><center>數量</center></th>
+          <th><center>刪除商品</center></th>
+        </tr>
+        {% for book in data %}
+      
+        <tr>
+          <td> <center>{{ book.商品編號 }}</center></td>
+          <td><center><img src= {{book.商品圖片}}  alt="" class="i"></center></td>
+          <td> <center>{{ book.商品名稱 }}</center></td>
+          <td> <center>{{ book.商品價格 }}</center></td>
+        
+          <td width="12%">
+            <center>
+              <input class="form-control" type="number" onkeyup="value=value.replace(/[^\d]/g,'')" min="1" value="{{ book.數量 }}" name="{{ book.商品編號 }}">
+            </center>
+          </td>
 
-          </center>
-        </td>
-        <td>
-          <center>
-            <button class="btn btn-danger" type="submit" value="{{book.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ book.商品名稱 }}\' 嗎？'))">
-              刪除
-            </button>
-          </center>
-      </td>
-      </tr>
-      {% endfor %}
-    </table>
-    <center>
-      <div class="option">
-        <button class="btn btn-primary" type="submit" value="edit" name="user_edit" >繼續購物</button>
-        <button class="btn btn-success" type="submit" value="edit" name="buy" >直接結帳</button>
-      </div>
-    </center>
+          <td>
+            <center>
+              <button class="btn btn-outline-danger " type="submit" value="{{book.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ book.商品名稱 }}\' 嗎？'))">
+                <i class="fa fa-times " aria-hidden="true"></i>
+              </button>
+            </center>
+          </td>
+        </tr>
+    
+
+        {% endfor %}
+      </table>
+      <div class="option d-flex justify-content-end mt-4">
+      <button class="btn btn-warning mr-3 rd_btn" type="submit" value="edit" name="user_edit" ><i class="fa fa-shopping-cart"></i>  繼續購物</button>
+      <button class="btn btn-primary rd_btn" type="submit" value="edit" name="buy" ><i class="fa fa-credit-card" aria-hidden="true"></i>  直接結帳</button>
+    </div>
+
+    </form>
 
 
-  </form>
-
+    
 </div>
+
+  
+
+
 
 {% endblock content%}

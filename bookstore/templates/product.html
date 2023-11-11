@@ -7,39 +7,113 @@
 
 {% block content %}
 
-{% set temp = 'img/' + data.商品圖片 %}
 
-<br/>
-<div class="row">
-<div class="card" style="width: 20rem;margin-left:5%">
-  <img src={{ url_for('static', filename = temp  ) }} class="card-img-top">
-  <div class="card-body">
-    <h5 class="card-title">{{ data.商品名稱 }}</h5>
-    <p class="card-text"></p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>商品類別</b>&nbsp;&nbsp;{{ data.類別 }}</li>
-    <li class="list-group-item"><b>商品單價</b>&nbsp;&nbsp;{{ data.單價 }}</li>
-  </ul>
-  <div class="card-body">
-    <a href="{{ url_for('restaurant.bookstore') }}" class="btn btn-outline-primary">回商品列表</a>
+
+
+<!-- -->
+<style>
+
+
+.single-product-content h3 {
+  font-size: 30px;
+  font-weight: 600;
+}
+.single-product-img img {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 20px #ddd;
+  box-shadow: 0 0 20px #ddd;
+}
+p.single-product-pricing span {
+  font-size: 18px;
+  display: block;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+.single-product-content p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.8;
+}
+
+.single-product-content p.single-product-pricing {
+  font-size: 25px;
+  font-weight: 550;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #c4453b;
+  line-height: inherit;
+}
+.mt-80{
+  margin-top: 80px;;
+}
+.single-product-img{
+  padding-right: 10%;
+}
+.cart_btn{
+  border-radius: 300px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.back_btn{
+  border-radius: 300px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 20px;
+}
+.ca{
+  color: #7d7d7d;
+}
+
+</style>
+
+<!-- -->
+
+<div class="single-product mt-80">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="single-product-img">
+         
+          <img src={{data.商品圖片}} alt="" class="card-img-top">
+        
+        </div>
+      </div>
+      
+      <div class="col-md-7">
+        <div class="single-product-content">
+          <h3>{{ data.商品名稱 }}</h3>
+          <p class="single-product-pricing">
+            <span class="ca">{{ data.類別 }}</span>$ {{ data.單價 }}</p>
+          <p>{{data.商品敘述}}</p>
+      </div>
+
+        <form method="post" action={{ url_for('restaurant.cart') }}>
+          <div class="d-flex">
+            <div>  
+              <button class="btn btn-warning cart_btn mt-3" type="submit" value="{{data.商品編號}}" name="pid">加入購物車</a>
+                
+            </div>
+            <div>
+              <a href="{{ url_for('restaurant.bookstore', mid=data.餐廳編號) }}" class="btn btn-outline-primary back_btn mt-3 ">回商品列表</a>
+            </div>
+          </div>
+        </form>
+
+
+        
+ 
+         
+
+      </div>
+    </div>
   </div>
 </div>
 
-
-<div class="col-sm-6">
-  <form method="post" action={{ url_for('restaurant.cart') }}>
-<div class="card" style="margin-top:10%">
-  <h5 class="card-header">商品介紹</h5>
-  <div class="card-body">
-    <p class="card-text">
-      {{data.商品敘述}}
-    </p>
-    <button class="btn btn-outline-success" type="submit" value="{{data.商品編號}}" name="pid">加入購物車</a>
-  </div>
-</div>
-</form>
-</div>
 
 
 </div>

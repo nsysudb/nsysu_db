@@ -59,7 +59,7 @@ def restaurant():
             final_data.append(book_data[j])
             
         count = math.ceil(total/9)
-        
+       
         return render_template('restaurant.html', single=single, keyword=search, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
 
     
@@ -87,7 +87,7 @@ def restaurant():
             
         for j in range(start, end):
             final_data.append(book_data[j])
-        
+       
         return render_template('restaurant.html', book_data=final_data, user=current_user.name, page=page, flag=flag, count=count)    
     
     elif 'keyword' in request.args:
@@ -117,6 +117,7 @@ def restaurant():
         return render_template('restaurant.html', keyword=search, single=single, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
     
     else:
+        
         book_row = Member.get_all_manager()
         book_data = []
         temp = 0
@@ -124,9 +125,13 @@ def restaurant():
             book = {
                 '餐廳編號': i[0],
                 '餐廳名稱': i[1]
+              
             }
+
+            
             if len(book_data) < 9:
                 book_data.append(book)
+            print('出現'+i[0]+'--'+i[1])
         
         return render_template('restaurant.html', book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)
 
@@ -142,9 +147,9 @@ def bookstore():
         if(current_user.role == 'manager'):
             flash('No permission')
             return redirect(url_for('manager.home'))
-    
 
     if 'keyword' in request.args and 'page' in request.args:
+     
         total = 0
         single = 1
         page = int(request.args['page'])
@@ -152,6 +157,7 @@ def bookstore():
         end = page * 9
         search = request.values.get('keyword')
         keyword = search
+       
         
         cursor.prepare('SELECT * FROM PRODUCT WHERE PNAME LIKE :search')
         cursor.execute(None, {'search': '%' + keyword + '%'})
@@ -180,31 +186,35 @@ def bookstore():
         return render_template('bookstore.html', single=single, keyword=search, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
 
     
-    elif 'mid' in request.args:
-        mid = request.args['mid']
-        data = Product.get_all_product_ByUID(mid)
-        if data is not None and len(data) >= 5:
-            pname = data[1]
-            price = data[2]
-            category = data[3]
-            description = data[4]
-            image = 'sdg.jpg'
-            
-            product = {
-                '商品編號': mid,
-                '商品名稱': pname,
-                '單價': price,
-                '類別': category,
-                '商品敘述': description,
-                '商品圖片': image
-            }
-        else:
-            flash('Product not found')
+    elif 'pid' in request.args:
+        
+        pid =request.values.get('pid')
+        data = Product.get_product(pid)   
+        pname = data[1]
+        price = data[2]
+        category = data[3]
+        description = data[4]
+        image = data[5]
+        mid=data[6]
+
+
+        product = {
+            '商品編號': pid,
+            '商品名稱': pname,
+            '單價': price,
+            '類別': category,
+            '商品敘述': description,
+            '商品圖片': image,
+            '餐廳編號':mid,
+        }
+        
+        return render_template('product.html', data = product, user=current_user.name)
         
     
-        return redirect(url_for('restaurant.bookstore'))
+                    
     
     elif 'page' in request.args:
+        
         page = int(request.args['page'])
         start = (page - 1) * 9
         end = page * 9
@@ -231,6 +241,7 @@ def bookstore():
         return render_template('bookstore.html', book_data=final_data, user=current_user.name, page=page, flag=flag, count=count)    
     
     elif 'keyword' in request.args:
+        
         single = 1
         search = request.values.get('keyword')
         keyword = search
@@ -258,7 +269,8 @@ def bookstore():
         return render_template('bookstore.html', keyword=search, single=single, book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)    
     
     else:
-        book_row = Product.get_all_product()
+        temp=request.values.get('mid')
+        book_row = Product.get_all_product_ByUID(temp)
         book_data = []
         temp = 0
         for i in book_row:
@@ -269,8 +281,12 @@ def bookstore():
             }
             if len(book_data) < 9:
                 book_data.append(book)
-        
+            
         return render_template('bookstore.html', book_data=book_data, user=current_user.name, page=1, flag=flag, count=count)
+
+
+    
+
 
 # 會員購物車
 @store.route('/cart', methods=['GET', 'POST'])
@@ -319,7 +335,8 @@ def cart():
         
         elif "user_edit" in request.form:
             change_order()  
-            return redirect(url_for('restaurant.bookstore'))
+            return redirect(url_for('restaurant.restaurant'))
+            
         
         elif "buy" in request.form:
             change_order()
@@ -451,3 +468,7 @@ def only_cart():
         product_data.append(product)
     
     return product_data
+
+
+
+
