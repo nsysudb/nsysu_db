@@ -408,15 +408,19 @@ def orderlist():
     
     orderdetail_row = Order_List.get_orderdetail()
     orderdetail = []
+    p_row=Product.get_product_managerName()
 
-    for j in orderdetail_row:
-        temp = {
-            '訂單編號': j[0],
-            '商品名稱': j[1],
-            '商品單價': j[2],
-            '訂購數量': j[3]
-        }
-        orderdetail.append(temp)
+    for x in p_row:
+        for j in orderdetail_row:
+            if j[1]==x[0]:
+                temp = {
+                    '訂單編號': j[0],
+                    '商品名稱': j[1],
+                    '商品單價': j[2],
+                    '訂購數量': j[3],
+                    '訂購店家': x[1]
+                }
+                orderdetail.append(temp)
 
 
     return render_template('orderlist.html', data=orderlist, detail=orderdetail, user=current_user.name)

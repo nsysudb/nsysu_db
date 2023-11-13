@@ -3,7 +3,7 @@
 {{ super() }}
 {% endblock head %}
 
-{% block title %}BookStore{% endblock title%}
+{% block title %}歷史訂單{% endblock title%}
 
 {% block content %}
 <!-- <form method="post" action="#"> -->
@@ -22,6 +22,7 @@
                         <th><center>商品名稱</center></th>
                         <th><center>商品單價</center></th>
                         <th><center>訂購數量</center></th>
+                        <th><center>訂購店家</center></th>
                       </tr>
                       
                       {% for j in detail %}
@@ -30,6 +31,7 @@
                         <td> <center>{{ j.商品名稱 }}</center></td>
                         <td> <center>{{ j.商品單價 }}</center></td>
                         <td> <center>{{ j.訂購數量 }}</center></td>
+                        <td> <center>{{ j.訂購店家 }}</center></td>
                       </tr>
                       {% endif %}
                       {% endfor %}
