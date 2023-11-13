@@ -41,7 +41,7 @@ class Member():
         sql ='SELECT * FROM MEMBER WHERE MID = :id'
         return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': mid}))
 
-  
+    
     
     def get_member(account):
         sql = "SELECT ACCOUNT, PASSWORD, MID, IDENTITY, NAME FROM MEMBER WHERE ACCOUNT = :id"
@@ -105,7 +105,11 @@ class Product():
     def get_all_product_ByUID(user_id):
         sql = 'SELECT * FROM PRODUCT WHERE MID =:id'
         return DB.fetchall(DB.execute_input( DB.prepare(sql), {'id':user_id}))        
-        
+
+    def get_product_manager():
+        sql = 'SELECT PNAME,NAME FROM MEMBER M, PRODUCT P WHERE P.MID=M.MID'
+        return DB.fetchall(DB.execute(DB.connect(), sql))
+         
     
     def get_name(pid):
         sql = 'SELECT PNAME FROM PRODUCT WHERE PID = :id'
